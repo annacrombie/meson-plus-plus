@@ -44,7 +44,7 @@ class Variable {
     std::string name;
 
     /// The version as used by value numbering, 0 means unset
-    uint version;
+    uint64_t version;
 };
 
 class Executable {

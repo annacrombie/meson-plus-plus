@@ -359,6 +359,23 @@ TEST(lower, trivial) {
     MIR::lower(&irlist, pstate);
 }
 
+TEST(value_number, simple) {
+    auto irlist = lower("a = 1\nb = 1\na = 2\n");
+    MIR::State::Persistant pstate{src_root, build_root};
+    MIR::Passes::value_numbering(&irlist, pstate);
+    ASSERT_EQ(irlist.instructions.size(), 3);
+
+    const auto & r = irlist.instructions.front();
+    ASSERT_TRUE(std::holds_alternative<std::unique_ptr<MIR::Number>>(r));
+    const auto & a = std::get<std::unique_ptr<MIR::Number>>(r);
+    ASSERT_EQ(a->var.version, 0);
+
+    const auto & x = irlist.instructions.back();
+    ASSERT_TRUE(std::holds_alternative<std::unique_ptr<MIR::Number>>(x));
+    const auto & b = std::get<std::unique_ptr<MIR::Number>>(x);
+    ASSERT_EQ(b->var.version, 1);
+}
+
 #if false
 TEST(lower, simple_real) {
     auto irlist = lower(R"EOF(

@@ -77,9 +77,12 @@ bool lower_free_functions(BasicBlock *, const State::Persistant &);
 bool flatten(BasicBlock *, const State::Persistant &);
 
 /**
+ * Walk all uses of a variable and give it a value
+ */
+bool value_numbering(BasicBlock *, const State::Persistant &);
+
+/**
  * Replace constants with local copies
- *
- * 
  */
 bool constant_propogation(BasicBlock *, const State::Persistant &);
 

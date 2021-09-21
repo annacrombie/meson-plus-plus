@@ -89,7 +89,25 @@ bool function_argument_walker(Object & obj, const ReplacementCallback & cb) {
         progress |= replace_elements(func->pos_args, cb);
     }
 
-    // TODO: dictionary lowering
+    // TODO: keyword arguments?
+
+    return progress;
+}
+
+bool function_argument_walker(Object & obj, const MutationCallback & cb) {
+    bool progress = false;
+
+    if (!std::holds_alternative<std::unique_ptr<FunctionCall>>(obj)) {
+        return progress;
+    }
+
+    auto & func = std::get<std::unique_ptr<FunctionCall>>(obj);
+
+    for (auto & p : func->pos_args) {
+        progress |= cb(p);
+    }
+
+    // TODO: keyword arguments?
 
     return progress;
 }

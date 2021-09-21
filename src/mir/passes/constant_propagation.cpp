@@ -6,6 +6,16 @@
 
 namespace MIR::Passes {
 
-bool constant_propogation(BasicBlock * block, State::Persistant & pstate) { return false; }
+namespace {}
+
+bool constant_propogation(BasicBlock * block, State::Persistant & pstate) {
+    // TODO: this will have some concern about premature optimization across
+    // blocks. We want to eliminate the dead variables at some point, but we
+    // can't remove them entirely until we're sure there are no more uses.
+    // That might mean just looking forward across all blocks to find additional
+    // uses of the constant
+
+    return false;
+}
 
 } // namespace MIR::Passes

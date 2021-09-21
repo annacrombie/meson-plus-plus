@@ -47,5 +47,6 @@ bool array_walker(Object &, const ReplacementCallback &);
  * This will replace the arguments if they are loweed by the callback
  */
 bool function_argument_walker(Object &, const ReplacementCallback &);
+bool function_argument_walker(Object &, const MutationCallback &);
 
 } // namespace MIR::Passes
